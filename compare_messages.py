@@ -18,7 +18,7 @@ def copypaste_score(text, other):
     return longest
 
 
-def pairwise_similarity_table(text_messages):
+def pairwise(text_messages):
     daily_comparisons = []
 
     for day, group in text_messages.groupby('day'):
@@ -31,7 +31,7 @@ def pairwise_similarity_table(text_messages):
             continue
 
         pairs['copypaste_score'] = [copypaste_score(a, b) for a, b in zip(pairs['content_1'], pairs['content_2'])]
-        pairs['is_similar'] = pairs['copypaste_score'] >= 15
+        pairs['is_similar'] = pairs['copypaste_score'] > 41
         daily_comparisons.append(pairs)
 
     pairwise_messages = pd.concat(daily_comparisons, ignore_index=True)
@@ -42,18 +42,3 @@ def pairwise_similarity_table(text_messages):
     pairwise_messages.to_csv("csv/pairwise_messages.csv", index=False)
 
     return pairwise_messages
-
-
-def similar_count(pairwise_messages):
-    similarity_summary = (
-        pairwise_messages[pairwise_messages['is_similar']]
-        .assign(
-            source_a=lambda df: df[['source_1', 'source_2']].min(axis=1),
-            source_b=lambda df: df[['source_1', 'source_2']].max(axis=1),
-        )
-        .groupby(['day', 'source_a', 'source_b'])
-        .size()
-        .reset_index(name='similar_count')
-    )
-
-    return similarity_summary

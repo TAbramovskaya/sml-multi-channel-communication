@@ -1,6 +1,7 @@
 import build_df
+import compare_messages
+import daily_summary
 import pandas as pd
-from compare_messages import *
 
 pd.set_option('display.max_columns', None)
 
@@ -29,14 +30,15 @@ if __name__ == "__main__":
 
     # ---
     # Option 1: Update pairwise message comparison from current DataFrame
-    # pairwise_messages = pairwise_similarity_table(text_messages)
+    pairwise_msg_similarity = compare_messages.pairwise(text_messages)
 
     # Option 2: Load data from ready-made CSV files:
-    pairwise_messages = pd.read_csv("csv/pairwise_messages.csv")
-    pairwise_messages["day"] = pd.to_datetime(pairwise_messages["day"]).dt.floor('D')
-    #---
+    # pairwise_msg_similarity = pd.read_csv("csv/pairwise_msg_similarity.csv")
+    # pairwise_msg_similarity["day"] = pd.to_datetime(pairwise_msg_similarity["day"]).dt.floor('D')
+    # #---
 
+    msg_counts = daily_summary.message_count(messages, text_messages)
 
-    similarity_summary = similar_count(pairwise_messages)
+    similarity_summary = daily_summary.similar_count(pairwise_msg_similarity, msg_counts)
     similarity_summary.to_csv("csv/similarity_summary.csv", index=False)
 
