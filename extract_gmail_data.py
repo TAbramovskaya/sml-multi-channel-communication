@@ -84,7 +84,9 @@ def build_dataframe_gmail(service, label):
     df = pd.DataFrame(rows)
 
     df = df[df["content"].str.len() > 0] # drop empty content
+    df["source_id"] = df.index
 
     df["date"] = pd.to_datetime(df["date"], errors="coerce", utc=True)
+    df = df[["source_id", "source", "type", "date", "content", "content_structured"]]
 
     return df

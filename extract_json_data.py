@@ -49,8 +49,10 @@ def build_dataframe_json(json_file, label):
             df["content_structured"] = df["raw_content"].apply(normalize_content)
             df["source"] = label
 
+            df["source_id"] = df.index
+
         else:
             print(f'JSON data keys do not match expectations: check JSON file {json_file}')
             return None
-    return df[['type', 'date', 'content', 'content_structured', 'source']]
+    return df[["source_id", "source", "type", "date", "content", "content_structured"]]
 
