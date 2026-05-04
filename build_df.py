@@ -22,11 +22,11 @@ def from_raw_data():
     gmail.to_csv("csv/gmail.csv")
 
     messages = pd.concat([intensives, events, gmail], axis=0, ignore_index=True)
-    messages = messages.drop(columns=["content_structured"])
+    # messages = messages.drop(columns=["content_structured"])
     messages = messages.sort_values("date")
     messages.to_csv("csv/messages.csv")
 
-    return intensives, events, gmail, messages
+    return messages
 
 
 def from_csv():
@@ -40,4 +40,4 @@ def from_csv():
     gmail["date"] = pd.to_datetime(gmail["date"])
     messages["date"] = pd.to_datetime(messages["date"])
 
-    return intensives, events, gmail, messages
+    return messages
