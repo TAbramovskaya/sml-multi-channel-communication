@@ -28,20 +28,20 @@ if __name__ == "__main__":
                 ]
 
     text_messages = messages[messages['type'] == 'text'].copy()
-    text_messages = text_messages[['id', 'source_id', 'source', 'day', 'content']]
+    text_messages['len'] = text_messages['content'].apply(lambda x: len(x.split(' ')))
+    text_messages = text_messages[['id', 'source_id', 'source', 'day', 'content', 'len']]
 
     # ---
     # Option 1: Update pairwise message comparison from current DataFrame
-    pairwise_msg_similarity = compare_messages.pairwise(text_messages)
-    export_csv.from_df(pairwise_msg_similarity, names=["pairwise_msg_similarity"])
+    # msg_pairwise_similarity = compare_messages.pairwise(text_messages)
+    # export_csv.from_df(msg_pairwise_similarity, names=["msg_pairwise_similarity"])
 
     # Option 2: Load data from ready-made CSV files:
-    # pairwise_msg_similarity = pd.read_csv("csv/pairwise_msg_similarity.csv")
-    # pairwise_msg_similarity["day"] = pd.to_datetime(pairwise_msg_similarity["day"]).dt.floor('D')
-    # #---
+    msg_pairwise_similarity = pd.read_csv("csv/msg_pairwise_similarity.csv")
+    msg_pairwise_similarity['day'] = pd.to_datetime(msg_pairwise_similarity['day']).dt.floor('D')
+    #---
 
-    msg_counts = daily_summary.msg_count(messages, text_messages)
+    day_source_msg_counts = daily_summary.msg_count(messages, text_messages)
 
-    similarity_summary = daily_summary.similar_count(pairwise_msg_similarity, msg_counts)
-    export_csv.from_df(similarity_summary, names=["similarity_summary.csv"])
-
+    day_source_msg_stats = daily_summary.duplication_rate(msg_pairwise_similarity, day_source_msg_counts)
+    export_csv.from_df(day_source_msg_stats, names=["day_source_msg_stats"])

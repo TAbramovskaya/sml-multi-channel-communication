@@ -3,7 +3,5 @@ def from_df(*dfs, names=None):
         print('Export failed: names argument does not match dfs argument')
         return
     for df, name in zip(dfs, names):
-        path = 'csv/' + name
+        path = 'csv/' + name + '.csv'
         df.to_csv(path, index=False)
-
-

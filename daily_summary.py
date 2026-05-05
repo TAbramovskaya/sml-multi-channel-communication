@@ -2,9 +2,16 @@ import pandas as pd
 
 
 def msg_count(messages, text_messages):
+    """
+    Counts the number of messages for each (day, source) pair.
+    Returns a DataFrame with the columns ['id', 'day', 'source', 'text_count', 'total_count']
+    """
+
     text_counts = text_messages.groupby(['day', 'source']).size().reset_index(name='text_count')
-    all_counts = messages.groupby(['day', 'source']).size().reset_index(name='all_count')
-    msg_counts = all_counts.merge(text_counts, how='left', on=['day', 'source']).fillna(0)
+    total_counts = messages.groupby(['day', 'source']).size().reset_index(name='total_count')
+    msg_counts = total_counts.merge(text_counts, how='left', on=['day', 'source']).fillna(0)
+    msg_counts['id'] = msg_counts.index
+    msg_counts = msg_counts[['id', 'day', 'source', 'text_count', 'total_count']]
 
     return msg_counts
 
