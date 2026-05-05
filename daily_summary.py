@@ -16,6 +16,59 @@ def msg_count(messages, text_messages):
     return msg_counts
 
 
+def duplication_rate(pairwise, msg_counts):
+    """
+    Extends message counts with duplication metrics per (day, source).
+
+    Identifies text messages that have at least one similar match with a message
+    from another source on the same day, and computes duplication statistics.
+
+    Returns a DataFrame with the columns
+        ['id', 'day', 'source', 'text_count', 'total_count', 'duplicates_count', 'duplication_rate']
+    where the following additional ones are:
+    - duplicates_count: number of text messages per (day, source) that were
+      marked as duplicates in at least one other source on the same day
+    - duplication_rate: proportion of duplicated messages among all text messages
+      for the given (day, source), calculated as duplicates_count / text_count
+    """
+
+    similar_pairs = pairwise[pairwise['is_similar']]
+
+    # Collect duplicated message ids for source_1
+    left = similar_pairs[['day', 'source_1', 'source_id_1']].rename(
+        columns={'source_1': 'source', 'source_id_1': 'msg_id'}
+    )
+
+    # Collect duplicated message ids for source_2
+    right = similar_pairs[['day', 'source_2', 'source_id_2']].rename(
+        columns={'source_2': 'source', 'source_id_2': 'msg_id'}
+    )
+
+    # Combine both sides
+    duplicates_msgs = pd.concat([left, right], ignore_index=True)
+
+    # keep unique (day, source, message_id)
+    duplicates_msgs = duplicates_msgs.drop_duplicates()
+    duplicates_msgs.to_csv('duplicates_msgs.csv', index=False)
+
+    # count duplicated messages per (day, source)
+    duplicates_counts = (
+        duplicates_msgs.groupby(['day', 'source'])
+        .size()
+        .reset_index(name='duplicates_count')
+    )
+
+    result = msg_counts.merge(duplicates_counts, on=['day', 'source'], how='left').fillna(0)
+
+    result['duplication_rate'] = (
+        result['duplicates_count'] / result['text_count']
+    )
+
+    result = result[['id', 'day', 'source', 'text_count', 'total_count', 'duplicates_count', 'duplication_rate']]
+
+    return result
+
+
 def similar_count(pairwise, msg_counts):
     similar_counts = (
         pairwise[pairwise['is_similar']]
