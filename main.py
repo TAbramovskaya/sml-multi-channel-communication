@@ -40,7 +40,7 @@ if __name__ == "__main__":
     # pairwise_msg_similarity["day"] = pd.to_datetime(pairwise_msg_similarity["day"]).dt.floor('D')
     # #---
 
-    msg_counts = daily_summary.message_count(messages, text_messages)
+    msg_counts = daily_summary.msg_count(messages, text_messages)
 
     similarity_summary = daily_summary.similar_count(pairwise_msg_similarity, msg_counts)
     export_csv.from_df(similarity_summary, names=["similarity_summary.csv"])

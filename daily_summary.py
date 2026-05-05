@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def message_count(messages, text_messages):
+def msg_count(messages, text_messages):
     text_counts = text_messages.groupby(['day', 'source']).size().reset_index(name='text_count')
     all_counts = messages.groupby(['day', 'source']).size().reset_index(name='all_count')
     msg_counts = all_counts.merge(text_counts, how='left', on=['day', 'source']).fillna(0)
