@@ -49,7 +49,6 @@ def duplication_rate(pairwise, msg_counts):
 
     # keep unique (day, source, message_id)
     duplicates_msgs = duplicates_msgs.drop_duplicates()
-    duplicates_msgs.to_csv('duplicates_msgs.csv', index=False)
 
     # count duplicated messages per (day, source)
     duplicates_counts = (
@@ -58,10 +57,11 @@ def duplication_rate(pairwise, msg_counts):
         .reset_index(name='duplicates_count')
     )
 
-    result = msg_counts.merge(duplicates_counts, on=['day', 'source'], how='left').fillna(0)
+    result = msg_counts.merge(duplicates_counts, on=['day', 'source'], how='left')
+    result['duplicates_count'] = result['duplicates_count'].fillna(0).astype(int)
 
     result['duplication_rate'] = (
-        result['duplicates_count'] / result['text_count']
+        round(result['duplicates_count'] / result['text_count'], 2)
     )
 
     result = result[['id', 'day', 'source', 'text_count', 'total_count', 'duplicates_count', 'duplication_rate']]
