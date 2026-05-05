@@ -39,6 +39,4 @@ def pairwise(text_messages):
     pairwise_messages['id'] = pairwise_messages.index
     pairwise_messages = pairwise_messages[['id', 'day', 'copypaste_score', 'is_similar', 'source_1', 'source_2', 'source_id_1', 'source_id_2', 'content_1' , 'content_2']]
 
-    pairwise_messages.to_csv("csv/pairwise_messages.csv", index=False)
-
     return pairwise_messages

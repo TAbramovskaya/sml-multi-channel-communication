@@ -17,17 +17,11 @@ def from_raw_data():
     events = build_dataframe_json(events_file, events_label)
     mailbox = build_dataframe_gmail(mailbox_service, mailbox_label)
 
-    intensives.to_csv("csv/intensives.csv", index=False)
-    events.to_csv("csv/events.csv", index=False)
-    mailbox.to_csv("csv/gmail.csv", index=False)
-
     messages = pd.concat([intensives, events, mailbox], axis=0, ignore_index=True)
     messages = messages.sort_values("date").reset_index(drop=True)
     messages["id"] = messages.index
 
     messages = messages[["id", "source_id", "source", "type", "date", "content", "content_structured"]]
-
-    messages.to_csv("csv/messages.csv", index=False)
 
     return messages, intensives, events, mailbox
 
