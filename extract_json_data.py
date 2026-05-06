@@ -67,4 +67,3 @@ def build_dataframe_json(json_file, label):
             print(f"JSON data keys do not match expectations: check JSON file {json_file}")
             return None
     return df[['source_id', 'source', 'type', 'date', 'content', 'content_structured']]
-

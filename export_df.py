@@ -1,25 +1,26 @@
 import pandas as pd
 import json
+import os
 
 
 def to_csv(df, name, prefix='csv/'):
     path = prefix + name + '.csv'
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     df.to_csv(path, index=False)
 
 
-def to_many_csv(*dfs, names=None, prefix='csv/'):
-    if not names or len(dfs) != len(names):
-        print('Export failed: names argument does not match dfs argument')
-        return
-    for df, name in zip(dfs, names):
-        path = prefix + name + '.csv'
-        df.to_csv(path, index=False)
+def to_many_csv_cropped(dfs_dict, day_start="2026-01-01", day_end="2026-04-30", no_content=True, path="csv/cropped/"):
+    for name, df in dfs_dict.items():
+        if df is None:
+            continue
 
+    os.makedirs(os.path.dirname(path), exist_ok=True)
 
-def to_csv_cropped(dfs_dict, day_start="2026-01-01", day_end="2026-04-30", no_content=True):
     cropped = {}
 
     for name, df in dfs_dict.items():
+        if df is None:
+            continue
         if no_content:
             drop_columns = ['content', 'content_structured', 'content_1', 'content_2', 'content_a', 'content_b']
         else:
@@ -37,12 +38,12 @@ def to_csv_cropped(dfs_dict, day_start="2026-01-01", day_end="2026-04-30", no_co
             new_df = new_df.drop(columns=drop_columns, errors="ignore")
 
         cropped[name] = new_df
-        to_csv(new_df, name, prefix='csv/cropped/cropped_')
+        to_csv(new_df, name, prefix=path + "/cropped_")
 
     return cropped
 
 
-def to_jsonl(df, day_start="2026-01-01", day_end="2026-04-30", col='content_structured', sources=None, output_path='analysis/input.jsonl'):
+def to_jsonl_cropped(df, day_start="2026-01-01", day_end="2026-04-30", col='content_structured', sources=None, output_path='analysis/input.jsonl'):
     if sources is None:
         sources = ['events', 'intensives', 'mailbox']
 
@@ -62,3 +63,5 @@ def to_jsonl(df, day_start="2026-01-01", day_end="2026-04-30", col='content_stru
             }
             if record["text"]:
                 f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+    return df

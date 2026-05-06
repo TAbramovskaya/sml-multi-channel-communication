@@ -76,9 +76,9 @@ def load(from_csv=None):
     else:
         if "text_messages" not in from_csv:
             text_messages = messages[messages['type'] == 'text'].copy()
-            text_messages['len'] = text_messages['content'].apply(lambda x: len(x.split(' ')))
-            text_messages = text_messages[text_messages['len'] > 1]
-            text_messages = text_messages[['id', 'source_id', 'source', 'date', 'day', 'len', 'content', 'content_structured']]
+            text_messages['words_count'] = text_messages['content'].apply(lambda x: len(x.split(' ')))
+            text_messages = text_messages[text_messages['words_count'] > 1]
+            text_messages = text_messages[['id', 'source_id', 'source', 'date', 'day', 'words_count', 'content', 'content_structured']]
 
             result["text_messages"] = text_messages
         else:

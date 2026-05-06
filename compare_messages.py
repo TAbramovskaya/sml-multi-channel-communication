@@ -27,7 +27,7 @@ def pairwise(text_messages):
         between two messages.
 
         Returns a DataFrame with the columns
-            ['id', 'day', 'copypaste_len', 'len_1', 'len_2', 'is_similar', 'source_1', 'source_2', 'source_id_1', 'source_id_2', 'content_1' , 'content_2']
+            ['id', 'day', 'copypaste_len', 'words_count_1', 'words_count_2', 'is_similar', 'source_1', 'source_2', 'source_id_1', 'source_id_2', 'content_1' , 'content_2']
         where
 
         - id: unique identifier of the comparison
@@ -37,7 +37,7 @@ def pairwise(text_messages):
         - source_1, source_2: sources of the compared messages
         - source_id_1, source_id_2: original message identifiers per source
         - content_1, content_2: message contents being compared
-        - len_1, len_2: words count in two messages
+        - words_count_1, words_count_2: words count in two messages
         """
 
     threshold = 41
@@ -59,7 +59,7 @@ def pairwise(text_messages):
     pairwise_messages = pd.concat(daily_comparisons, ignore_index=True)
     pairwise_messages['day'] = pairwise_messages['day_1']
     pairwise_messages['id'] = pairwise_messages.index
-    pairwise_messages = pairwise_messages[['id', 'day', 'copypaste_len', 'len_1', 'len_2', 'is_similar',
+    pairwise_messages = pairwise_messages[['id', 'day', 'copypaste_len', 'words_count_1', 'words_count_2', 'is_similar',
                                            'source_1', 'source_2', 'source_id_1', 'source_id_2',
                                            'content_1' , 'content_2']]
 
