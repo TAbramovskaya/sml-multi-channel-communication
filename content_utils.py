@@ -6,7 +6,9 @@ def simplify_content(text):
     if not text:
         return ""
 
-    text = text.replace("\u00A0", " ")  # normalize non-breaking spaces
+    text = text.replace("\u00A0", " ")  # normalize Non-Breaking SPaces
+    text = text.replace("\u2028", " ")  # normalize Line Separator
+    text = text.replace("\u2029", " ")  # normalize Paragraph Separator
     # text = re.sub(r"[^a-zA-Zа-яА-Я]+", " ", text) # remove all characters except Latin and Cyrillic letters
     text = re.sub(r"[^а-яА-Я]+", " ", text) # allow Cyrillic letters only
     text = re.sub(r"\s+", " ", text)    # collapse whitespace
@@ -24,8 +26,10 @@ def normalize_content(text):
     # Remove emojis
     # text = emoji.replace_emoji(text, replace="")
 
-    # Replace non-breaking spaces with normal spaces
+    # Replace NBSP, LS, and PS with normal spaces
     text = text.replace("\u00A0", " ")
+    text = text.replace("\u2028", " ")
+    text = text.replace("\u2029", " ")
 
     # Normalize tabs to spaces
     text = text.replace("\t", " ")
