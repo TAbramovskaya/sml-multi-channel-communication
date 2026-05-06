@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 
 
 def to_csv(df, name, prefix='csv/'):
@@ -42,3 +43,25 @@ def to_csv_cropped(dfs_dict, day_start="2026-01-01", day_end="2026-04-30", no_co
         to_csv(new_df, name, prefix='csv/cropped/cropped_')
 
     return cropped
+
+
+def to_jsonl(df, day_start="2026-01-01", day_end="2026-04-30", col='content_structured', sources=None, output_path='analysis/input.jsonl'):
+    if sources is None:
+        sources = ['events', 'intensives', 'mailbox']
+
+    df = df.copy()
+    start = pd.to_datetime(day_start, utc=True)
+    end = pd.to_datetime(day_end, utc=True) + pd.Timedelta(days=1)
+
+    df = df[(df['day'] >= start)
+            & (df['day'] < end)
+            & (df['source'].isin(sources))]
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        for i, row in df.iterrows():
+            record = {
+                "id": row['id'],
+                "text": row[col]
+            }
+            if record["text"]:
+                f.write(json.dumps(record, ensure_ascii=False) + "\n")
