@@ -1,5 +1,6 @@
 import build_df
 import export_df
+import analysis.llm as llm
 import pandas as pd
 
 
@@ -16,6 +17,8 @@ if __name__ == "__main__":
         if df is not None:
             export_df.to_csv(df, name)
 
-    export_df.to_jsonl(result['text_messages'], sources=['events'])
+    export_df.to_jsonl_cropped(result['text_messages'], sources=['events'])
 
-    cropped = export_df.to_csv_cropped(result)
+    cropped = export_df.to_many_csv_cropped(result)
+
+    llm.process("analysis/input.jsonl", "analysis/output.jsonl")
