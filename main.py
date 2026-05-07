@@ -2,10 +2,6 @@ import build_df
 import export_df
 import analysis.llm as llm
 import analysis.postprocess_llm_results as postprocess
-import pandas as pd
-
-
-pd.set_option('display.max_columns', None)
 
 
 if __name__ == "__main__":
@@ -19,14 +15,12 @@ if __name__ == "__main__":
         if df is not None:
             export_df.to_csv(df, name)
 
-
     cropped = export_df.to_many_csv_cropped(result)
 
-    txt_msg_cropped = export_df.to_jsonl_cropped(result['text_messages'])
+    txt_msg_cropped = export_df.to_jsonl_cropped(result['text_messages'], output_path='analysis/input.jsonl')
 
     llm.process("analysis/input.jsonl", "analysis/output.jsonl")
 
     txt_msg_cropped = postprocess.add_features(txt_msg_cropped, "analysis/output.jsonl")
-    export_df.to_csv(txt_msg_cropped[["id", "source_id", "source", "date", "day", "words_count",
-                                      "transformation_score","transformation_type", "author",
-                                      "tag_1", "tag_2", "tag_3"]], "cropped/txt_msg_llm")
+
+    export_df.to_csv(txt_msg_cropped, "cropped/!txt_msg_llm")
