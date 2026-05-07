@@ -1,18 +1,18 @@
 import json
 import time
-from typing import List, Dict
 from tqdm import tqdm
 from openai import OpenAI
-from prompts import *
+from analysis.prompts import *
+from dotenv import load_dotenv
 
-MODEL = "gpt-5.3"
+MODEL = "gpt-5.4-mini"
 BATCH_SIZE_PASS1 = 15
 BATCH_SIZE_PASS2 = 50
 RETRY_COUNT = 3
 SLEEP_BETWEEN = 1.2
 
-client = OpenAI(api_key="YOUR_API_KEY")
-
+load_dotenv("secret/.env")
+client = OpenAI()
 
 def process(input_path, output_path):
     with open(input_path, "r", encoding="utf-8") as f:
@@ -54,7 +54,7 @@ def process(input_path, output_path):
     print(f"Saved to {output_path}")
 
 
-def run_pass1(batch: List[Dict]):
+def run_pass1(batch):
     user_content = json.dumps(batch, ensure_ascii=False)
 
     messages = [
@@ -70,7 +70,7 @@ def run_pass1(batch: List[Dict]):
     return parsed if parsed is not None else []
 
 
-def run_pass2(batch: List[Dict]):
+def run_pass2(batch):
     user_content = json.dumps(batch, ensure_ascii=False)
 
     messages = [

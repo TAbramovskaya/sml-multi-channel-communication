@@ -9,7 +9,7 @@ TAGS = [
     "корпоративный опыт"
 ]
 
-PASS1_SYSTEM = """
+PASS1_SYSTEM = '''
 Analyze how much the text was transformed from its original human draft.
 Be precise and conservative.
 Use consistent criteria across all texts.
@@ -35,9 +35,9 @@ Return a JSON array with one object per input message:
     "transformation_score": int
   }
 ]
-"""
+'''
 
-PASS2_SYSTEM = f"""
+PASS2_SYSTEM = f'''
 Extract structured data.
 
 AUTHOR:
@@ -51,10 +51,10 @@ TAGS:
 Return a JSON array with one object per input message:
 
 [
-  {
+  {{
     "id": int,
     "author": string,
     "tags": [string, string, string]
-  }
+  }}
 ]
-"""
+'''
