@@ -9,6 +9,33 @@ TAGS = [
     "корпоративный опыт"
 ]
 
+INTENT = [
+    "конверсия в обучение",
+    "регистрация на вебинар",
+    "обучающее вовлечение",
+    "формирование доверия"
+]
+
+CONTENT = [
+    "промо-контент",
+    "практический кейс",
+    "корпоративный опыт",
+    "карьерный контент",
+    "собеседования",
+    "обучающий контент",
+    "обзор индустрии",
+    "студенческие кейсы",
+    "интерактивный формат"
+]
+
+DELIVERY_STYLE = [
+    "экспертное мнение",
+    "личный опыт",
+    "мотивация и поддержка",
+    "информационный анонс",
+    "создание срочности"
+]
+
 PASS1_SYSTEM = '''
 Analyze how much the text was transformed from its original human draft.
 Be precise and conservative.
@@ -41,12 +68,28 @@ PASS2_SYSTEM = f'''
 Extract structured data.
 
 AUTHOR:
-- Extract only if explicitly stated (e.g. "с вами X", "на связи X", "меня зовут X" etc.)
-- Otherwise: "admin"
+- Extract only if explicitly stated
+  ("с вами X", "на связи X", "меня зовут X", etc.)
+- Otherwise return: "Simulative"
 
-TAGS:
-- Select exactly 3 from this list:
-{TAGS}
+TAG_INTENT:
+Select exactly ONE from:
+{INTENT}
+
+TAG_CONTENT:
+Select exactly ONE from:
+{CONTENT}
+
+TAG_DELIVERY_STYLE:
+Select exactly ONE from:
+{DELIVERY_STYLE}
+
+Priority rules:
+- INTENT = primary expected outcome of the message
+- CONTENT = main informational substance
+- DELIVERY_STYLE = dominant communication style
+- If multiple categories apply, choose the category that best represents most of the message
+- Ignore small promotional fragments at the end unless the entire message is promotional
 
 Return a JSON array with one object per input message:
 
@@ -54,7 +97,9 @@ Return a JSON array with one object per input message:
   {{
     "id": int,
     "author": string,
-    "tags": [string, string, string]
+    "tag_intent": string,
+    "tag_content": string,
+    "tag_delivery_style": string
   }}
 ]
 '''

@@ -10,17 +10,18 @@ def add_features(df, path):
             results[row["id"]] = row
 
     # map results into dataframe
-    df["transformation_score"] = df["id"].map(lambda x: results.get(x, {}).get("transformation_score"))
+
     df["author"] = df["id"].map(lambda x: results.get(x, {}).get("author"))
     df["author"] = df["author"].apply(lambda x: config.aliases.get(x, x))
 
-    df["tags"] = df["id"].map(lambda x: (results.get(x, {}).get("tags") or [None, None, None]))
-    df[["tag_1", "tag_2", "tag_3"]] = pd.DataFrame(df["tags"].tolist(), index=df.index)
-    df.drop(columns=["tags"], inplace=True)
+    df["tag_intent"] = df["id"].map(lambda x: results.get(x, {}).get("tag_intent", "other"))
+    df["tag_content"] = df["id"].map(lambda x: results.get(x, {}).get("tag_content", "other"))
+    df["tag_delivery_style"] = df["id"].map(lambda x: results.get(x, {}).get("tag_delivery_style", "other"))
 
-    for tag in ["tag_1", "tag_2", "tag_3"]:
-        df[tag] = df[tag].apply(lambda x: config.tags_eng.get(x, x))
+    for tag in ["tag_intent", "tag_content", "tag_delivery_style"]:
+        df[tag] = df[tag].apply(lambda x: config.tags_rus_eng[tag].get(x, x))
 
+    df["transformation_score"] = df["id"].map(lambda x: results.get(x, {}).get("transformation_score"))
     bins = [0, 20, 40, 60, 80, 100]
     labels = [
         "minimal edits",
@@ -32,5 +33,8 @@ def add_features(df, path):
 
     df["transformation_type"] = pd.cut(df["transformation_score"], bins=bins, labels=labels, include_lowest=True)
 
+    df = df[["id", "source_id", "source", "date", "day", "words_count",
+             "transformation_score", "transformation_type", "author",
+             "tag_intent", "tag_content", "tag_delivery_style"]]
 
     return df
