@@ -1,6 +1,7 @@
 import build_df
 import export_df
 import analysis.llm as llm
+import analysis.postprocess_llm_results as postprocess
 import pandas as pd
 
 
@@ -9,7 +10,7 @@ pd.set_option('display.max_columns', None)
 
 if __name__ == "__main__":
 
-    # result = build_df.load()
+    result = build_df.load()
     # Use the from_csv argument to load (some) data from a CSV files. Here is the full list of DataFrames
     # that can be loaded from existing files.
     # ["messages", "intensives", "events", "mailbox", "text_messages", "msg_pairwise_similarity", "day_source_msg_stats"]
@@ -20,6 +21,12 @@ if __name__ == "__main__":
 
 
     cropped = export_df.to_many_csv_cropped(result)
-    txt_msg_events_cropped = export_df.to_jsonl_cropped(result['text_messages'], sources=['events'])
+
+    txt_msg_cropped = export_df.to_jsonl_cropped(result['text_messages'])
 
     llm.process("analysis/input.jsonl", "analysis/output.jsonl")
+
+    txt_msg_cropped = postprocess.add_features(txt_msg_cropped, "analysis/output.jsonl")
+    export_df.to_csv(txt_msg_cropped[["id", "source_id", "source", "date", "day", "words_count",
+                                      "transformation_score","transformation_type", "author",
+                                      "tag_1", "tag_2", "tag_3"]], "cropped/txt_msg_llm")

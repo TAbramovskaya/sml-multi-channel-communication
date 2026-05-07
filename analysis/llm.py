@@ -14,6 +14,7 @@ SLEEP_BETWEEN = 1.2
 load_dotenv("secret/.env")
 client = OpenAI()
 
+
 def process(input_path, output_path):
     with open(input_path, "r", encoding="utf-8") as f:
         data = [json.loads(line) for line in f]
