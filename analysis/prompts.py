@@ -39,7 +39,7 @@ Use consistent criteria across all texts.
 
 Do NOT detect AI vs human.
 
-Return a score from 0 to 100:
+Return a conservative score from 0 to 100:
 0 = minimal edits
 100 = heavily rewritten or reconstructed
 
