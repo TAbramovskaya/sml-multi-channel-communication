@@ -1,5 +1,5 @@
 aliases = {
-    'admin' : 'SML',
+    'admin' : 'Simulative',
     'Павел Беляев': 'Pavel B.',
     'Наталья Рожкова': 'Natalia R.',
     'Георгий Семенов': 'Georgii S.',
@@ -33,24 +33,30 @@ tags_rus_eng = {
         "конверсия в обучение": "conversion to course enrollment",
         "регистрация на вебинар": "webinar registration",
         "обучающее вовлечение": "educational engagement",
+        "мотивация и поддержка": "motivation and support",
         "формирование доверия": "building trust"
     },
     "tag_content": {
         "промо-контент": "promotional content",
         "практический кейс": "practical case",
-        "корпоративный опыт": "corporate experience",
-        "карьерный контент": "career content",
-        "собеседования": "interview preparation",
-        "обучающий контент": "educational content",
-        "обзор индустрии": "industry overview",
-        "студенческие кейсы": "student outcomes",
-        "интерактивный формат": "interactive format"
+        "собеседования и карьера": "careers and interviews",
+        "опыт в индустрии": "industry experience",
+        "студенческие кейсы": "student outcomes"
     },
     "tag_delivery_style": {
-        "экспертное мнение": "expert opinion",
-        "личный опыт": "personal experience",
-        "мотивация и поддержка": "motivation and support",
-        "информационный анонс": "informational announcement",
-        "создание срочности": "urgency framing"
+        "презентационный стиль": "explanatory marketing",
+        "информационный стиль": "informational announcement",
+        "создание срочности": "urgency framing",
+        "наставнический стиль": "mentorship"
     }
 }
+
+transformation_bins = [0, 20, 40, 60, 80, 100]
+
+transformation_labels = [
+        "minimal edits",
+        "light edits",
+        "structural changes",
+        "strong rewrite",
+        "heavy reconstruction"
+]
