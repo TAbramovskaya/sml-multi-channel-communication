@@ -2,6 +2,7 @@ import re
 import unicodedata
 import emoji
 
+
 def simplify_content(text):
     if not text:
         return ""
@@ -32,7 +33,7 @@ def normalize_content(text):
     text = text.replace("\u2029", " ")
 
     # Normalize tabs to spaces
-    text = text.replace("\t", " ")
+    # text = text.replace("\t", " ")
 
     # cleaned_lines = [
     #     re.sub(r" +", " ", line).strip()
