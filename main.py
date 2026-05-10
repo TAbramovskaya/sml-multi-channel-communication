@@ -1,9 +1,6 @@
-import build_df
-import msg_summary
-import export_df
-import analysis.llm as llm
-import analysis.postprocess_llm_results as postprocess
-import pandas as pd
+from src import export_df, build_df, msg_summary
+import src.ai_analysis.llm as llm
+import src.ai_analysis.postprocess_llm_results as postprocess
 
 
 def get_messages(from_csv):
@@ -18,12 +15,15 @@ def get_messages(from_csv):
 
 
 def ai_analysis(messages):
+    llm_input = "src/ai_analysis/input.jsonl"
+    llm_output = "src/ai_analysis/output.jsonl"
+
     text_messages = msg_summary.get_text_messages(result["messages"])
-    txt_msg_cropped = export_df.to_jsonl(text_messages, output_path="analysis/input.jsonl")
+    txt_msg_cropped = export_df.to_jsonl(text_messages, output_path=llm_input)
 
-    llm.process("analysis/input.jsonl", "analysis/output.jsonl")
+    llm.process(llm_input, llm_output)
 
-    txt_msg_cropped = postprocess.add_features(txt_msg_cropped, "analysis/output.jsonl")
+    txt_msg_cropped = postprocess.add_features(txt_msg_cropped, llm_output)
 
     return txt_msg_cropped
 
@@ -38,7 +38,7 @@ def export_to_vis(result):
 
 if __name__ == "__main__":
 
-    # File "csv/messages.csv" is mandatory if from_csv=True
+    # File "data/csv/messages.csv" is mandatory if from_csv=True
     result = get_messages(from_csv=True)
 
     if result is not None:
