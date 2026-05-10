@@ -1,6 +1,6 @@
 import json
 import pandas as pd
-from content_utils import *
+from src.content_utils import *
 
 
 def get_type(row):

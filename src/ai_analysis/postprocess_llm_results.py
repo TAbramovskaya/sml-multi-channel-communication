@@ -1,6 +1,6 @@
 import pandas as pd
 import json
-import analysis.postprocess_config as config
+import src.ai_analysis.postprocess_config as config
 
 
 def add_features(df, path):
@@ -10,21 +10,21 @@ def add_features(df, path):
             row = json.loads(line)
             results[row["id"]] = row
 
-    # map results into dataframe
+    # Map results into dataframe
 
-    # df["author"] = (
-    #     df["id"]
-    #     .map(
-    #         lambda x: results.get(x, {}).get("author")
-    #     )
-    # )
-    #
-    # df["author"] = (
-    #     df["author"]
-    #     .apply(
-    #         lambda x: config.aliases.get(x, x)
-    #     )
-    # )
+    df["author"] = (
+        df["id"]
+        .map(
+            lambda x: results.get(x, {}).get("author")
+        )
+    )
+
+    df["author"] = (
+        df["author"]
+        .apply(
+            lambda x: config.aliases.get(x, x)
+        )
+    )
 
     for tag in ["tag_intent", "tag_content", "tag_delivery_style"]:
         df[tag] = df["id"].map(lambda x: results.get(x, {}).get(tag))

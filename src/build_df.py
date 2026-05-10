@@ -1,6 +1,6 @@
-from extract_json_data import *
-from extract_gmail_data import *
-import auth
+from src.extract_json_data import *
+from src.extract_gmail_data import *
+import src.auth as auth
 import os
 
 
@@ -9,8 +9,8 @@ def load(from_csv=False):
     result = {name: None for name in names}
 
     if not from_csv:
-        intensives = build_dataframe_json("raw_data/intensives.json", "intensives")
-        events = build_dataframe_json("raw_data/events.json", "events")
+        intensives = build_dataframe_json("/data/raw_data/intensives.json", "intensives")
+        events = build_dataframe_json("/data/raw_data/events.json", "events")
         mailbox = build_dataframe_gmail(auth.build_service(), "mailbox")
 
         messages = get_messages_from_sources(intensives, events, mailbox)
@@ -21,9 +21,9 @@ def load(from_csv=False):
         result["messages"] = messages
 
     else:
-        if os.path.exists("csv/messages.csv"):
+        if os.path.exists("data/csv/messages.csv"):
             keep_cols = ["id", "source_id", "source", "type", "date", "day", "content", "content_structured"]
-            messages = pd.read_csv("csv/messages.csv")
+            messages = pd.read_csv("data/csv/messages.csv")
 
             messages["date"] = (
                 pd.to_datetime(
@@ -40,14 +40,14 @@ def load(from_csv=False):
 
             result["messages"] = messages
 
-        required_files = {"csv/intensives.csv", "csv/events.csv", "csv/mailbox.csv"}
+        required_files = {"data/csv/intensives.csv", "data/csv/events.csv", "data/csv/mailbox.csv"}
         missing_files = [
             path for path in required_files
             if not os.path.exists(path)
         ]
 
         if not missing_files:
-            intensives = pd.read_csv("csv/intensives.csv")
+            intensives = pd.read_csv("data/csv/intensives.csv")
             intensives["date"] = (
                 pd.to_datetime(
                     intensives["date"], utc=True, errors="coerce"
@@ -55,14 +55,14 @@ def load(from_csv=False):
             )
             result["intensives"] = intensives
 
-            events = pd.read_csv("csv/events.csv")
+            events = pd.read_csv("data/csv/events.csv")
             events["date"] = (
                 pd.to_datetime(
                     events["date"], utc=True, errors="coerce")
             )
             result["events"] = events
 
-            mailbox = pd.read_csv("csv/mailbox.csv")
+            mailbox = pd.read_csv("data/csv/mailbox.csv")
             mailbox["date"] = (
                 pd.to_datetime(
                     mailbox["date"], utc=True, errors="coerce")

@@ -1,5 +1,5 @@
 import base64
-from content_utils import *
+from src.content_utils import *
 import pandas as pd
 from email.utils import parsedate_to_datetime
 

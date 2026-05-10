@@ -1,5 +1,5 @@
 import pandas as pd
-import compare_messages
+import src.compare_messages as compare
 
 
 def build_daily_stats(messages):
@@ -115,7 +115,7 @@ def get_daily_counts(messages, text_messages):
         .reset_index()
     )
 
-    pairwise = compare_messages.pairwise(text_messages)
+    pairwise = compare.pairwise(text_messages)
 
     daily_duplicates = duplication_rate(pairwise)
 

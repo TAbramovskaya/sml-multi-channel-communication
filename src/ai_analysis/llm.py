@@ -2,7 +2,7 @@ import json
 import time
 from tqdm import tqdm
 from openai import OpenAI
-from analysis.prompts import *
+from src.ai_analysis.prompts import *
 from dotenv import load_dotenv
 
 MODEL = "gpt-5.4-mini"
