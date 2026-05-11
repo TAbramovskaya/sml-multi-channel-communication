@@ -27,10 +27,12 @@ def normalize_content(text):
     # Remove emojis
     # text = emoji.replace_emoji(text, replace="")
 
-    # Replace NBSP, LS, and PS with normal spaces
-    text = text.replace("\u00A0", " ")
-    text = text.replace("\u2028", " ")
-    text = text.replace("\u2029", " ")
+    text = text.replace("\u00A0", " ")     # normalize Non-Breaking SPaces
+    text = text.replace("\u2028", " ")     # normalize Line Separator
+    text = text.replace("\u2029", " ")     # normalize Paragraph Separator
+    text = text.replace("\u200C", " ")     # normalize Zero Width Non-Joiner
+    text = re.sub(r" +", " ", text)     # collapse multiple spaces
+    text = text.strip()
 
     # Normalize tabs to spaces
     # text = text.replace("\t", " ")

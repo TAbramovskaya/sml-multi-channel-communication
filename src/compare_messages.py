@@ -61,7 +61,7 @@ def pairwise(text_messages):
     pairwise_messages["day"] = pairwise_messages["day_1"]
     pairwise_messages["id"] = pairwise_messages.index
     pairwise_messages = pairwise_messages[["id", "day", "copypaste_len", "words_count_1", "words_count_2", "is_similar",
-                                           "source_1", "source_2", "source_id_1", "source_id_2",
+                                           "source_1", "source_2", "id_1", "id_2", "source_id_1", "source_id_2",
                                            "content_1" , "content_2"]]
 
     return pairwise_messages
