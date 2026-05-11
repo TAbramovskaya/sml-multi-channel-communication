@@ -10,8 +10,6 @@ def add_features(df, path):
             row = json.loads(line)
             results[row["id"]] = row
 
-    # Map results into dataframe
-
     df["author"] = (
         df["id"]
         .map(
@@ -48,12 +46,8 @@ def add_features(df, path):
         )
     )
 
-    # df = df[["id", "source_id", "source", "date", "day", "words_count",
-    #          "transformation_score", "transformation_type", "author",
-    #          "tag_intent", "tag_content", "tag_delivery_style"]]
-
-    df = df[["id", "source_id", "source", "day", "words_count",
-             "transformation_score", "transformation_type",
+    df = df[["id", "source_id", "source", "date", "day", "words_count",
+             "transformation_score", "transformation_type", "author",
              "tag_intent", "tag_content", "tag_delivery_style"]]
 
     return df
