@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/ReportLayout.astro
-title: "Multi-Channel Communication"
+title: "SML Multi-Channel Communication"
 description: ""
 ---
 

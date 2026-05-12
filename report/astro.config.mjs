@@ -4,7 +4,7 @@ import mdx from "@astrojs/mdx";
 
 export default defineConfig({
   site: "https://tabramovskaya.github.io/sml-multi-channel-communication",
-  base: "/REPO",
+  base: "/sml-multi-channel-communication",
 
   vite: {
     plugins: [tailwindcss()],
