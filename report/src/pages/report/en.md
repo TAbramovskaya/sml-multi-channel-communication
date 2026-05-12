@@ -1,9 +1,7 @@
 ---
 layout: ../../layouts/ReportLayout.astro
-title: "SML Multi-Channel Communication"
-description: "Technical project report"
+title: "Multi-Channel Communication"
+description: ""
 ---
 
-# Introduction
-
-English version of the report.
+English version under construction.
