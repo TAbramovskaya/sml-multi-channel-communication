@@ -23,7 +23,7 @@ DELIVERY_STYLE = [
 
 PASS1_SYSTEM = '''
 Analyze how much the text was transformed from its original human draft.
-Be precise and conservative.
+Be conservative when assigning high scores.
 Use consistent criteria across all texts.
 
 Do NOT detect AI vs human.
