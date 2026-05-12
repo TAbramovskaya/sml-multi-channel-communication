@@ -1,3 +1,6 @@
+---
+const base = import.meta.env.BASE_URL;
+---
 <header class="py-6 border-b border-base-200">
   <div class="flex items-center justify-between">
     <a
@@ -8,9 +11,13 @@
     </a>
 
     <nav class="flex items-center gap-4 text-sm">
-      <a href="/report/ru" class="text-base-600 hover:text-black">RU</a>
+      <a href={`${base}report/ru`} class="text-base-600 hover:text-black">
+        RU
+      </a>
 
-      <a href="/report/en" class="text-base-600 hover:text-black">EN</a>
+      <a href={`${base}report/en`} class="text-base-600 hover:text-black">
+        EN
+      </a>
 
       <a
         href="https://github.com/TAbramovskaya/sml-multi-channel-communication"
