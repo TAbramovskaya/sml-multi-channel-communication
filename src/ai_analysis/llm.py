@@ -20,12 +20,12 @@ def process(input_path, output_path):
         data = [json.loads(line) for line in f]
 
     # Pass 1 for transformation score
-    pass1_results = {}
-    for batch in tqdm(chunk_list(data, BATCH_SIZE_PASS1), desc="PASS 1"):
-        result = run_pass1(batch)
-        for item in result or []:
-            pass1_results[item["id"]] = item
-        time.sleep(SLEEP_BETWEEN)
+    # pass1_results = {}
+    # for batch in tqdm(chunk_list(data, BATCH_SIZE_PASS1), desc="PASS 1"):
+    #     result = run_pass1(batch)
+    #     for item in result or []:
+    #         pass1_results[item["id"]] = item
+    #     time.sleep(SLEEP_BETWEEN)
 
     # Pass 2 for author and tags
     pass2_results = {}
@@ -42,7 +42,7 @@ def process(input_path, output_path):
         merged = {
             "id": _id,
             "text": item["text"],
-            **pass1_results.get(_id, {}),
+            # **pass1_results.get(_id, {}),
             **pass2_results.get(_id, {})
         }
 
