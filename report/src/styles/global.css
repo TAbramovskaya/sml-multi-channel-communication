@@ -88,16 +88,14 @@ body {
 .prose img {
   max-width: 100%;
   height: auto;
-  border-radius: 1rem;
+  border-radius: 0rem;
 }
 
-/* левый вариант (по умолчанию) */
 .img-left {
   display: block;
-  margin: 2rem 0 2rem 1.5rem;
+  margin: 0rem 0 0rem 2.5rem;
 }
 
-/* центр */
 .img-center {
   display: block;
   margin: 3rem auto;

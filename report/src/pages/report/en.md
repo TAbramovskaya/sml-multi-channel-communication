@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/ReportLayout.astro
-title: "Multi-Channel Communication"
+title: "One does not simply mark all messages as read"
 description: ""
 ---
 

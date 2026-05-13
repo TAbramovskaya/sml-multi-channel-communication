@@ -1,6 +1,6 @@
 ## One does not simply mark all messages as read
 
-A small personal data project about navigating modern multi-channel communication.
+A small personal data project about navigating multi-channel communication.
 
 ### What this is
 
