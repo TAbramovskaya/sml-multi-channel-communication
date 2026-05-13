@@ -36,4 +36,13 @@ The goal is not to build a predictive system, but to understand:
 
 **Or in simpler terms: when “being informed” starts to feel like “too much”.**
 
+### Links
+
+[Project website](https://tabramovskaya.github.io/sml-multi-channel-communication/)
+
+[Tableau story — message statistics visualizations](https://public.tableau.com/views/Multi-channelcommunicationMessages/MessagesWordsDuplicates?:language=en-GB&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
+[Tableau story — semantic analysis of messages (LLM-based)](https://public.tableau.com/views/Multi-ChannelCommunicationLLMresults/LLMresults?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
+[Tableau dashboard — message calendar](https://public.tableau.com/views/FindYourFavoriteMentor/FindYourFavoriteMentor?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 ---
