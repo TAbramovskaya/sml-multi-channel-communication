@@ -4,11 +4,11 @@ A small personal data project about navigating multi-channel communication.
 
 ### What this is
 
-This project explores how messages from different sources (Telegram channels and email) contribute to information overload and the subjective feeling of “too much pressure” in everyday digital communication.
+This project explores how messages from different sources (Telegram bot chats and email) contribute to information overload and the subjective feeling of “too much pressure” in everyday digital communication.
 
 ### Data
 
-The dataset consists of message exports from three two Telegram channel and a email newsletter from the same educational project Simulative. 
+The dataset consists of message exports from three two Telegram bot chats and a email newsletter from the same educational project Simulative. 
 
 Time coverage from September 2025 to April 2026  
 
