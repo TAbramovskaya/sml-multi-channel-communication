@@ -70,7 +70,7 @@ description: ""
 
 <img src="/sml-multi-channel-communication/images/text_message_and_cross_duplicates_events.png" class="img-left" width="70%" />
 
-По каждому источнику в отдельности ситуация аналогичная, для каждого из них наблюдается подобное значительное дублирование (можно посмотреть на [Tableau Public](https://public.tableau.com/views/Multi-channelcommunicationMessages/MessagesWordsDuplicates?:language=en-GB&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)). В дальнейшем будем опираться на источник Events — у него самая долгая непрерывная история сообщений, именно это меня и интересует в следующем вопросе.
+По каждому источнику в отдельности ситуация аналогичная, для каждого из них наблюдается подобное значительное дублирование (можно посмотреть на [Tableau Public](https://public.tableau.com/views/Multi-channelcommunicationMessages/MessagesWordsDuplicates?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)). В дальнейшем будем опираться на источник Events — у него самая долгая непрерывная история сообщений, именно это меня и интересует в следующем вопросе.
 
 ### Считаем сообщения
 
